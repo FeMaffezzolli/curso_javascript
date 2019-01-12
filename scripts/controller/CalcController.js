@@ -1,6 +1,7 @@
 class CalcController {
   constructor() {
     // Fetch calculator objects
+    this._locale = "pt-BR";
     this._displayCalcEl = document.querySelector("#display");
     this._dateEl = document.querySelector("#data");
     this._timeEl = document.querySelector("#hora");
@@ -8,8 +9,36 @@ class CalcController {
   }
 
   initialize() {
-    this._dateEl.innerHTML = "28/04/1994";
-    this._timeEl.innerHTML = "23:59";
+    this.setDisplayDateTime();
+
+    setInterval(() => {
+      this.setDisplayDateTime();
+    }, 1000);
+  }
+
+  setDisplayDateTime() {
+    this.displayDate = this.currentDate.toLocaleDateString(this._locale, {
+      day: "2-digit",
+      month: "long",
+      year: "numeric"
+    });
+    this.displayTime = this.currentDate.toLocaleTimeString(this._locale);
+  }
+
+  get displayTime() {
+    return this._timeEl.innerHTML;
+  }
+
+  set displayTime(value) {
+    this._timeEl.innerHTML = value;
+  }
+
+  get displayDate() {
+    return this._dateEl.innerHTML;
+  }
+
+  set displayDate(value) {
+    this._dateEl.innerHTML = value;
   }
 
   get displayCalc() {
